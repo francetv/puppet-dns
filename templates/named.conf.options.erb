@@ -1,4 +1,4 @@
-xxoptions {
+options {
   directory "/var/cache/bind";
 
   // If there is a firewall between you and nameservers you want
@@ -21,7 +21,7 @@ xxoptions {
   listen-on-v6 { <%= @listen_on_v6 -%> ; };
 <% if @listen_on.size != 0 -%>
   listen-on {<% @listen_on.each do |listen| -%>
-  <%= listen_on -%>;<% end -%>
+  <%= listen -%>;<% end -%>
   };
 <% end -%>
   // Accepter les requêtes pour le réseau interne uniquement

@@ -6,7 +6,7 @@
 #  $forwarders:
 #   Array of forwarders IP addresses. Default: empty
 # $group:
-#	Group of the file. Default: bind
+# Group of the file. Default: bind
 # $owner:
 #   Owner of the file. Default: bind
 #
@@ -15,9 +15,11 @@
 #    'forwarders' => [ '8.8.8.8', '8.8.4.4' ],
 #   }
 #
-define dns::server::options inherits dns::server::params (
+define dns::server::options (
   $forwarders = [],
 ) {
+
+  include dns::server::params
 
   file { $title:
     ensure  => present,
@@ -25,8 +27,7 @@ define dns::server::options inherits dns::server::params (
     group   => $group,
     mode    => '0644',
     require => [File[${cfg_dir}], Class['dns::server::install']],
-	content => template("${module_name}/named.conf.options.erb"),
+    content => template("${module_name}/named.conf.options.erb"),
     notify  => Class['dns::server::service'],
   }
-
 }

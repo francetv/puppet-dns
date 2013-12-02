@@ -20,6 +20,7 @@ define dns::server::options (
   $dnssec_validation = 'auto',
   $dnssec_enable     = 'yes',
   $listen_on_v6      = 'none',
+  $listen_on         = [],
   $allow_query       = [],
   $allow_recursion   = [],
 ) {

@@ -16,8 +16,14 @@
 #   }
 #
 define dns::server::options (
-  $forwarders = [],
+  $forwarders        = [],
+  $dnssec_validation = 'auto',
+  $dnssec_enable     = 'yes',
+  $listen_on_v6      = 'none',
+  $allow_query       = [],
+  $allow_recursion   = [],
 ) {
+
 
   file { $title:
     ensure  => present,

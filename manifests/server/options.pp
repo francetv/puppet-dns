@@ -19,14 +19,12 @@ define dns::server::options (
   $forwarders = [],
 ) {
 
-  include dns::server::params
-
   file { $title:
     ensure  => present,
-    owner   => $owner,
-    group   => $group,
+    owner   => $dns::server::params::owner,
+    group   => $dns::server::params::group,
     mode    => '0644',
-    require => [File[${dns::server::params::cfg_dir}], Class['dns::server::install']],
+    require => [File[$dns::server::params::cfg_dir], Class['dns::server::install']],
     content => template("${module_name}/named.conf.options.erb"),
     notify  => Class['dns::server::service'],
   }

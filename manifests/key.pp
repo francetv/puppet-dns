@@ -9,7 +9,7 @@ define dns::key {
 
 
   exec {"dnssec-keygen-${name}":
-    command     => "/usr/sbin/dnssec-keygen -a HMAC-MD5 -r /dev/urandom -b 128 -n USER ${name}",
+    command     => "/usr/sbin/dnssec-keygen -a HMAC-MD5 -r /dev/urandom -b 128 -n HOST ${name}.",
     cwd         => '/etc/bind/bind.keys.d',
     require     => [Package['dnssec-tools','bind9'],File['/etc/bind/bind.keys.d']],
     refreshonly => true,

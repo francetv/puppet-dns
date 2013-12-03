@@ -63,5 +63,6 @@ define dns::key {
     target  => '/etc/bind/named.conf.local',
     order   => 2,
     source  => "/etc/bind/bind.keys.d/${name}.key",
+    require => [File["/etc/bind/bind.keys.d/${name}.key"]]
   }
 }

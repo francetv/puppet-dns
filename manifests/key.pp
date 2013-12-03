@@ -55,7 +55,7 @@ define dns::key {
     ensure  => present,
     target  => "/etc/bind/bind.keys.d/${name}.key",
     order   => 3,
-    content => '}:',
+    content => "};\n",
     require => [Exec["get-secret-from-${name}"], File["/etc/bind/bind.keys.d/${name}.secret"]],
   }
   concat::fragment{"named.conf.local.${name}.key":

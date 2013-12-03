@@ -4,6 +4,11 @@ zone "<%= @zone %>" {
   notify <%= @zone_notify %>;
 <% end -%>
   file "<%= @zone_file %>";
+<% if @update_policy -%>
+  update-policy {
+      grant <%= @update_policy %>. name *.<%= @zone %>. A;
+  };
+<% end -%>
 <% if @zone_type == 'slave' -%>
   masters { <%= @slave_masters %>;};
 <% elsif @zone_type == 'master' -%>
@@ -13,6 +18,6 @@ zone "<%= @zone %>" {
   <%= ip %>;
 <% end -%>
   };
-<% end -%>  
+<% end -%>
 <% end -%>
 };

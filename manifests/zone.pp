@@ -1,19 +1,20 @@
 define dns::zone (
-  $soa = "${::fqdn}.",
-  $soa_email = "root.${::fqdn}.",
-  $serial = false,
-  $zone_ttl = '604800',
-  $zone_refresh = '604800',
-  $zone_retry = '86400',
-  $zone_expire = '2419200',
-  $zone_minimum = '604800',
-  $nameservers = [ $::fqdn ],
-  $reverse = false,
-  $zone_type = 'master',
+  $soa            = "${::fqdn}.",
+  $soa_email      = "root.${::fqdn}.",
+  $serial         = false,
+  $zone_ttl       = '604800',
+  $zone_refresh   = '604800',
+  $zone_retry     = '86400',
+  $zone_expire    = '2419200',
+  $zone_minimum   = '604800',
+  $nameservers    = [ $::fqdn ],
+  $update_policy  = undef,
+  $reverse        = false,
+  $zone_type      = 'master',
   $allow_transfer = [],
-  $slave_masters = undef,
-  $zone_notify = false,
-  $ensure = present
+  $slave_masters  = undef,
+  $zone_notify    = false,
+  $ensure         = present
 ) {
 
   validate_array($allow_transfer)

@@ -1,12 +1,12 @@
 define dns::key {
 
-  file {"/tmp/${name}-secret.sh": 
+  file {"/tmp/${name}-secret.sh":
     ensure => file,
     mode    => '0777',
     content => template('dns/secret.erb'),
     notify => Exec["dnssec-keygen-${name}"],
   }
-    
+
 
   exec {"dnssec-keygen-${name}":
     command     => "/usr/sbin/dnssec-keygen -a HMAC-MD5 -r /dev/urandom -b 128 -n USER ${name}",
@@ -23,7 +23,7 @@ define dns::key {
     require     => [Exec["dnssec-keygen-${name}"],File['/etc/bind/bind.keys.d',"/tmp/${name}-secret.sh"]],
     refreshonly => true,
   }
- 
+
   file { "/etc/bind/bind.keys.d/${name}.secret":
     require => Exec["get-secret-from-${name}"],
   }
@@ -55,13 +55,13 @@ define dns::key {
     ensure  => present,
     target  => "/etc/bind/bind.keys.d/${name}.key",
     order   => 3,
-    content => '}:', 
+    content => '}:',
     require => [Exec["get-secret-from-${name}"], File["/etc/bind/bind.keys.d/${name}.secret"]],
   }
-  #concat::fragment{"named.conf.local.${name}.key":
-  #  ensure  => present,
-  #  target  => '/etc/bind/named.conf.local',
-  #  content => templates
-  #}
-
+  concat::fragment{"named.conf.local.${name}.key":
+    ensure  => present,
+    target  => '/etc/bind/named.conf.local',
+    order   => 2,
+    source  => "/etc/bind/bind.keys.d/${name}.key",
+  }
 }
